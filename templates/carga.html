@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-4 col-md-6">
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <p>{{ message }}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card card-body">
+            <form action="/agregar" method="POST">
+                <div class="form-group">
+                    <input type="text" name="nombre" placeholder="Nombre" class="form-control" required>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="text" name="apellido" placeholder="Apellido" class="form-control" required>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="tel" name="telefono" placeholder="Teléfono" class="form-control" required>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="email" name="correo" placeholder="Correo" class="form-control" required>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="dni" name="dni" placeholder="DNI" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary mt-5">
+                        Guardar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-12 mt-5">
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Apellido</td>
+                    <td>Teléfono</td>
+                    <td>Correo</td>
+                    <td>DNI</td>
+                    <td> Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.1 }}</td>
+                    <td>{{ cliente.2 }}</td>
+                    <td>{{ cliente.3 }}</td>
+                    <td>{{ cliente.4 }}</td>
+                    <td>{{ cliente.5 }}</td>
+                    <td>
+                        <a href="/editar/{{cliente.0}}" class="btn btn-secondary">Editar</a>
+                        <a href="/eliminar/{{cliente.0}}" class="btn btn-danger btn-delete">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock %}
