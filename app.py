@@ -41,11 +41,9 @@ def agregar():
         cursor = conn.cursor()
         cursor.execute("SELECT dni FROM clientes")
         verif = cursor.fetchall()
-        flash(verif)
         listaDni = []
         for ver in verif:
             listaDni.append(ver[0])
-        flash(listaDni)
         if dni in listaDni:
             flash('El DNI: ' + dni + ' ya existe.')
         else:
