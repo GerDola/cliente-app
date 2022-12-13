@@ -39,15 +39,19 @@ def agregar():
         dni = request.form['dni']
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.execute('SELECT dni FROM clientes')
-        resultados = cursor.fetchone()
-        if dni not in resultados:
+        cursor.execute("SELECT dni FROM clientes")
+        verif = cursor.fetchall()
+        flash(verif)
+        listaDni = []
+        for ver in verif:
+            listaDni.append(ver[0])
+        flash(listaDni)
+        if dni in listaDni:
+            flash('El DNI: ' + dni + ' ya existe.')
+        else:
             cursor.execute('INSERT INTO clientes (nombre, apellido, telefono, email, dni) VALUES (%s, %s, %s, %s, %s)',
                            (nombre, apellido, tel, email, dni))
-
-            flash('Cliente agregado con éxito')
-        else:
-            flash('El DNI ya existe')
+            flash('Cliente DNI: ' + dni + ' cargado con éxito.')
     conn.commit()
     return redirect(url_for('carga'))
 
